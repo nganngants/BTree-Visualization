@@ -34,7 +34,6 @@ bool BTree::Remove(int key)
 {
     if (!root)
     {
-        //cout << "B-Tree is empty!\n";
         return false;
     }
     bool removed = root->Remove(key);
@@ -52,7 +51,6 @@ void BTree::Clear()
 {
     if (root == NULL) return;
     root->Clear();
-    //delete root;
     root = NULL;
 }
 
@@ -61,16 +59,4 @@ BNode* BTree::GetRoot()
     return root;
 }
 
-int BTree::GetHeight(BNode *node)
-{
-    if (!root) return 0;
-    int height = 0;
-    BNode* cur = node;
-    while (cur != NULL)
-    {
-        height++;
-        if (cur->leaf) break;
-        cur = cur->subset[0];
-    }
-    return height;
-}
+

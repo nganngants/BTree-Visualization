@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>958</width>
     <height>600</height>
    </rect>
   </property>
@@ -25,11 +25,18 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>776</width>
-         <height>448</height>
+         <width>934</width>
+         <height>421</height>
         </rect>
        </property>
       </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="forPrintTree">
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </item>
     <item>
@@ -78,23 +85,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="backButton">
-        <property name="text">
-         <string>Back</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="printButton">
         <property name="text">
          <string>Print</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="forwardButton">
-        <property name="text">
-         <string>Forward</string>
         </property>
        </widget>
       </item>
@@ -150,7 +143,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>958</width>
      <height>25</height>
     </rect>
    </property>

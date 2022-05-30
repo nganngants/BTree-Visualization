@@ -10,42 +10,29 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textbox->setMaxLength(4);
     ui->textbox->setText(QString());
 
-    forPrintTree = new QLabel();
-    forPrintTree->setWordWrap(true);
+    ui->forPrintTree->setWordWrap(true);
     QFont f( "Nirmala UI", 16, QFont::Bold);
-    forPrintTree->setFont(f);
-    headLayout = new QHBoxLayout;
-    headLayout->addWidget(ui->label);
-    headLayout->addWidget(ui->textbox);
-    headLayout->addWidget(ui->insButton);
-    headLayout->addWidget(ui->revButton);
-    headLayout->addWidget(ui->searchButton);
-    headLayout->addSpacing(105);
-    headLayout->addWidget(ui->backButton);
-    headLayout->addWidget(ui->printButton);
-    headLayout->addWidget(ui->forwardButton);
-    headLayout->addSpacing(105);
+    ui->forPrintTree->setFont(f);
+    buttonLayout = new QHBoxLayout;
+    buttonLayout->addWidget(ui->label);
+    buttonLayout->addWidget(ui->textbox);
+    buttonLayout->addWidget(ui->insButton);
+    buttonLayout->addWidget(ui->revButton);
+    buttonLayout->addWidget(ui->searchButton);
+    buttonLayout->addSpacing(105);
+    buttonLayout->addWidget(ui->printButton);
+    buttonLayout->addWidget(ui->clrButton);
 
-    headLayout->addWidget(ui->clrButton);
-
-    headLayout->addSpacing(75);
-    headLayout->addWidget(ui->label_3);
-    headLayout->addWidget(ui->maxDegOpt);
-    //headLayout->setSpacing(100);
-
-    footLayout = new QHBoxLayout;
-    footLayout->addWidget(ui->history);
-    //footLayout->addSpacing(432);
-    //footLayout->addWidget(ui->backButton);
-    //footLayout->addWidget(ui->forwardButton);
-    footLayout->addSpacing(450);
+    buttonLayout->addSpacing(275);
+    buttonLayout->addWidget(ui->label_3);
+    buttonLayout->addWidget(ui->maxDegOpt);
 
     renderArea = new RenderArea(this,new BTree(3));
     renderArea->setVisible(true);
     renderArea->setMinimumWidth(5000);
     renderArea->setMinimumHeight(5000);
     renderArea->setUpdatesEnabled(true);
-    renderArea->SetX(900 + renderArea->geometry().x());
+    renderArea->SetX(50 + renderArea->geometry().x());
     renderArea->SetY(renderArea->geometry().y() + 10);
 
 
@@ -59,9 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     mainLayout = new QVBoxLayout;
     mainLayout->addWidget(ui->scrollArea);
-    mainLayout->addWidget(forPrintTree);
-    mainLayout->addLayout(headLayout,200);
-    mainLayout->addLayout(footLayout);
+    mainLayout->addWidget(ui->forPrintTree);
+    mainLayout->addLayout(buttonLayout,200);
+    mainLayout->addWidget(ui->history);
 
     centralWidget = new QWidget(this);
     centralWidget->setLayout(mainLayout);
@@ -73,12 +60,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete renderArea;
-    delete forPrintTree;
-    delete headLayout;
-    delete footLayout;
+    delete buttonLayout;
     delete centralWidget;
     delete mainLayout;
-    //delete btree;
 }
 
 
@@ -94,7 +78,7 @@ void MainWindow::on_searchButton_clicked()
                               QMessageBox::StandardButton::Ok);
         return;
     }
-    forPrintTree->setText("");
+    ui->forPrintTree->setText("");
     ui->history->setText(">>>Searching key " + num + "...");
     QApplication::processEvents();
     bool succ = renderArea->Search(convertToNum(num));
@@ -115,7 +99,7 @@ void MainWindow::on_insButton_clicked()
                               QMessageBox::StandardButton::Ok);
         return;
     }
-    forPrintTree->setText("");
+    ui->forPrintTree->setText("");
     ui->history->setText(">>>Inserting key " + num + "...");
 
     QApplication::processEvents();
@@ -137,7 +121,7 @@ void MainWindow::on_revButton_clicked()
                               QMessageBox::StandardButton::Ok);
         return;
     }
-    forPrintTree->setText("");
+    ui->forPrintTree->setText("");
     ui->history->setText(">>>Removing key " + num + "...");
     QApplication::processEvents();
     bool succ = renderArea->Remove(convertToNum(num));
@@ -149,7 +133,7 @@ void MainWindow::on_revButton_clicked()
 
 void MainWindow::on_clrButton_clicked()
 {
-    forPrintTree->setText("");
+    ui->forPrintTree->setText("");
     renderArea->Clear();
     renderArea->repaint();
     ui->history->setText(">>>Screen Cleared");
@@ -190,7 +174,7 @@ void MainWindow::on_printButton_clicked()
     else
     {
         ui->history->setText(">>>B-Tree was printed");
-        forPrintTree->setText(printTree);
+        ui->forPrintTree->setText(printTree);
     }
 }
 
@@ -198,8 +182,6 @@ void MainWindow::on_maxDegOpt_currentTextChanged(const QString &arg1)
 {
     if (renderArea == NULL) return;
     int curMaxDeg = convertToNum(ui->maxDegOpt->currentText());
-    //qDebug() << curMaxDeg << '\n';
     renderArea->SetMaxDeg(curMaxDeg);
-    //qDebug() << "?\n";
     renderArea->repaint();
 }

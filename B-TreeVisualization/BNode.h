@@ -26,7 +26,6 @@ private:
     int RemoveBiggest();
 public:
     BNode(int minDeg, bool leaf) : minDeg(minDeg), leaf(leaf) {};
-    //~BNode(){this->Clear();}
     QString Traverse();
     BNode* Contains(int key);
 

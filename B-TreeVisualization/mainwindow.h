@@ -42,12 +42,10 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    QLabel* forPrintTree;
+    //QLabel* forPrintTree;
     QVBoxLayout* mainLayout;
     RenderArea* renderArea;
     QWidget* centralWidget;
-    QHBoxLayout* headLayout;
-    QHBoxLayout* footLayout;
-
+    QHBoxLayout* buttonLayout;
 };
 #endif // MAINWINDOW_H

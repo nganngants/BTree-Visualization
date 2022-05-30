@@ -19,9 +19,8 @@ class RenderArea : public QWidget
 public:
     explicit RenderArea(QWidget *parent = nullptr, BTree* btree = new BTree());
     ~RenderArea();
-    void DrawBTree(QPainter* painter, BNode *root, double x, double y);
-    bool compareLength(QString s, int x);
-    int compareRootSize(int i, BNode* root);
+
+    int DrawBTree(QPainter* painter, BNode *root, double x, double y);
 
     void SetX(double x) {X = x;}
     void SetY(double y) {Y = y;}
@@ -35,10 +34,9 @@ public:
 
     static QString toString(int x);
 
-signals:
-
 protected:
     void paintEvent(QPaintEvent* event) override;
+
 private:
     BTree *btree;
     double X, Y; //coordinate
@@ -46,9 +44,7 @@ private:
     int squareSize;
     int rowSpace;
     QColor nodeColor;
-    QColor nodeSearchingColor;
     QColor textColor;
-    QColor foundTextColor;
 
     QPen* pen;
     QBrush* brush;
