@@ -11,10 +11,10 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textbox->setText(QString());
 
     ui->forPrintTree->setWordWrap(true);
-    QFont f( "Nirmala UI", 16, QFont::Bold);
+    QFont f( "Nirmala UI", 16);
     ui->forPrintTree->setFont(f);
     buttonLayout = new QHBoxLayout;
-    buttonLayout->addWidget(ui->label);
+    buttonLayout->addWidget(ui->enter);
     buttonLayout->addWidget(ui->textbox);
     buttonLayout->addWidget(ui->insButton);
     buttonLayout->addWidget(ui->revButton);
@@ -22,12 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     buttonLayout->addSpacing(105);
     buttonLayout->addWidget(ui->printButton);
     buttonLayout->addWidget(ui->clrButton);
-
-    buttonLayout->addSpacing(275);
-    buttonLayout->addWidget(ui->label_3);
+    buttonLayout->addSpacing(450);
+    buttonLayout->addWidget(ui->maxdeg);
     buttonLayout->addWidget(ui->maxDegOpt);
 
-    renderArea = new RenderArea(this,new BTree(3));
+    renderArea = new RenderArea(this);
     renderArea->setVisible(true);
     renderArea->setMinimumWidth(5000);
     renderArea->setMinimumHeight(5000);
@@ -104,7 +103,6 @@ void MainWindow::on_insButton_clicked()
 
     QApplication::processEvents();
     renderArea->Insert(convertToNum(num));
-    renderArea->repaint();
     ui->history->setText(">>>Key " + num + " was inserted");
 }
 
@@ -125,7 +123,6 @@ void MainWindow::on_revButton_clicked()
     ui->history->setText(">>>Removing key " + num + "...");
     QApplication::processEvents();
     bool succ = renderArea->Remove(convertToNum(num));
-    renderArea->repaint();
     if (succ) ui->history->setText(">>>Key " + num + " was removed");
     else ui->history->setText(">>>Key " + num + " does not exist");
 }
@@ -135,7 +132,6 @@ void MainWindow::on_clrButton_clicked()
 {
     ui->forPrintTree->setText("");
     renderArea->Clear();
-    renderArea->repaint();
     ui->history->setText(">>>Screen Cleared");
 }
 
@@ -182,6 +178,7 @@ void MainWindow::on_maxDegOpt_currentTextChanged(const QString &arg1)
 {
     if (renderArea == NULL) return;
     int curMaxDeg = convertToNum(ui->maxDegOpt->currentText());
+    ui->history->setText(">>>Initialize B-Tree with max degree " + ui->maxDegOpt->currentText());
     renderArea->SetMaxDeg(curMaxDeg);
     renderArea->repaint();
 }

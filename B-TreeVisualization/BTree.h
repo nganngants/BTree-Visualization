@@ -6,7 +6,6 @@ class BTree
 private:
     int minDeg;
     BNode* root;
-    int treeHeight;
 public:
     BTree(int maxDeg = 2) : minDeg((maxDeg + 1) / 2) { root = NULL; }
     QString Traverse();

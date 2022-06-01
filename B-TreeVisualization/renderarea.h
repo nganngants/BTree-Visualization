@@ -17,10 +17,10 @@ class RenderArea : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RenderArea(QWidget *parent = nullptr, BTree* btree = new BTree());
+    explicit RenderArea(QWidget *parent = nullptr);
     ~RenderArea();
 
-    int DrawBTree(QPainter* painter, BNode *root, double x, double y);
+    double DrawBTree(QPainter* painter, BNode *root, double x, double y);
 
     void SetX(double x) {X = x;}
     void SetY(double y) {Y = y;}

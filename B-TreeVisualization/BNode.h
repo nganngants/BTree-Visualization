@@ -32,10 +32,10 @@ public:
     void Insert(int key);
     bool Remove(int key);
     void Clear();
-    int GetSize() {return sz(keys);};
+    int GetKeysSize() {return sz(keys);};
     BNode* GetChild(int i) {if (i < sz(subset)) return subset[i]; return NULL;}
-    int GetOrder() {return minDeg * 2 - 1;}
     int GetKey(int i) {if (i < sz(keys)) return keys[i]; return 0;}
+    int GetOrder() {return minDeg * 2 - 1;}
     bool isLeaf() {return leaf;}
     friend class BTree;
 };

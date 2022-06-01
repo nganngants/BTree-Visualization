@@ -1,9 +1,10 @@
 #include "renderarea.h"
 
 
-RenderArea::RenderArea(QWidget *parent, BTree* btree)
-    : QWidget{parent}, btree(btree)
+RenderArea::RenderArea(QWidget *parent)
+    : QWidget{parent}
 {
+    btree = new BTree(3);
     fSize = 13;
     squareSize = 35;
     rowSpace = 70;
@@ -25,6 +26,7 @@ RenderArea::~RenderArea()
     delete brush;
 }
 
+//this function will be called automatically when repaint() is called
 void RenderArea::paintEvent (QPaintEvent*)
 {
     if (btree->GetRoot() == NULL) return;
@@ -54,45 +56,43 @@ void RenderArea::constructNode(QPainter* painter, QString s, double x, double y)
     painter->drawStaticText(QPoint(x + 4.0, y + 7.0), text);
 }
 
-int RenderArea::DrawBTree(QPainter* painter, BNode* root, double x, double y)
+double RenderArea::DrawBTree(QPainter* painter, BNode* root, double x, double y)
 {
-    if (root == NULL) return 0;
+    if (root == NULL) return x;
     if (!root->isLeaf())
     {
         vector<QPoint> children;
         double oldStartX = x, nextStartX;
 
         //call recursion to draw children nodes first
-        for (int i=0;i<=root->GetSize();++i)
+        for (int i=0;i<=root->GetKeysSize();++i)
         {
             nextStartX = DrawBTree(painter,root->GetChild(i),oldStartX,y + rowSpace);
-            int endLine = (nextStartX + oldStartX) / 2.0;
-            children.push_back(QPoint(endLine,y + rowSpace)); //keeps children nodes position
+            double endLineX = (nextStartX + oldStartX) / 2.0;
+            children.push_back(QPoint(endLineX,y + rowSpace)); //keeps children nodes position
             oldStartX = nextStartX + squareSize;
         }
 
         //draw this node
-        double curStartX = (oldStartX + x) / 2.0 - (1.0 * root->GetSize()) * 1.0 * squareSize;
-        for (int i=0;i<root->GetSize();++i)
+        double curStartX = (oldStartX + x) / 2.0 - 1.0 * root->GetKeysSize() * squareSize;
+        for (int i=0;i<root->GetKeysSize();++i)
             constructNode(painter, toString(root->GetKey(i)), curStartX + i * squareSize, y );
 
         //draw lines
         double startY = y + 2 * fSize;
-        double startLine;
 
-        for (int i=0;i<=root->GetSize();++i)
+        for (int i=0;i<=root->GetKeysSize();++i)
         {
-            startLine = curStartX + i * squareSize;
-            QLineF line = QLineF(QPoint(startLine,startY), children[i]);
+            QLineF line = QLineF(QPoint(curStartX + i * squareSize,startY), children[i]);
             painter->drawLine(line);
         }
         return nextStartX;
     }
     else
     {
-        for (int i=0;i<root->GetSize();++i)
+        for (int i=0;i<root->GetKeysSize();++i)
             constructNode(painter, toString(root->GetKey(i)), x + i * squareSize, y );
-        return (x + root->GetSize() * squareSize);
+        return (x + root->GetKeysSize() * squareSize * 1.0);
     }
 }
 
@@ -111,11 +111,13 @@ QString RenderArea::toString(int x)
 void RenderArea::Insert(int key)
 {
     btree->Insert(key);
+    repaint();
 }
 
 bool RenderArea::Remove(int key)
 {
     if (!btree->Remove(key)) return false;
+    repaint();
     return true;
 }
 
@@ -129,6 +131,7 @@ bool RenderArea::Search(int key)
 void RenderArea::Clear()
 {
     btree->Clear();
+    repaint();
 }
 
 QString RenderArea::Print()
