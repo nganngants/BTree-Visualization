@@ -61,7 +61,6 @@ MainWindow::~MainWindow()
     delete renderArea;
     delete buttonLayout;
     delete centralWidget;
-    delete mainLayout;
 }
 
 
