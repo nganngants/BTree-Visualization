@@ -1,5 +1,7 @@
 ## BTree-Visualization
-This is a simple B-Tree Visualization GUI application using Qt C++.
+# About
+This is a simple B-Tree Visualization GUI application which is programmed completely in C++ using the Qt GUI Framework.
+
 This project is made for educational purpose only.
 
 # Features
