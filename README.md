@@ -1,8 +1,14 @@
+<p align="center">
+  <a href="https://www.uit.edu.vn/" title="Trường Đại học Công nghệ Thông tin" style="border: none;">
+    <img src="https://i.imgur.com/WmMnSRt.png" alt="Trường Đại học Công nghệ Thông tin | University of Information Technology">
+  </a>
+</p>
+
 # B-Tree Visualizer
 ## About
 This is a simple B-Tree Visualization GUI application which is programmed completely in C++ using the Qt GUI Framework.
 
-This project is made for educational purpose only.
+This application is the final project for Data structures and Algorithms course.
 
 ## Features
 1. B-Trees of order 3, 5, and 7 can be visualized.
